@@ -1,37 +1,26 @@
-const profiles = {
-    stavroshalkius: {
-        name: "Stavros Halkius",
-        bio: "Comedian",
-        followers: "1.05M"
-    },
-    ryanwoods: {
-        name: "Ryan Woods",
-        bio: "Software Engineer, and comedian",
-        followers: " 100K"
-    },
-    beyonce: {
-        name: "Beyonce",
-        bio: "Singer",
-        followers: "200M"
-    }
-}
+import CommentBox from "@/components/CommentBox";
+import LikeButton from "@/components/LikeButton";
+
 
 export default async function ProfilePage({params}) {
     const {username} = await params;
+    const response = await fetch('https://jsonplaceholder.typicode.com/users?username=' + username,);
+    const users = await response.json();
+    const user = users[0]
     
-    const profile = profiles[username];
-
-        if (!profile) {
+    if (!user) {
             return (
                 <h1>User not found</h1>
             )
         }
     return (
         <main>
-            <h1>@{username}</h1>
-            <h2>{profile.name}</h2>
-            <p>{profile.bio}</p>
-            <p>Followers: {profile.followers}</p>
+            <h1>@{user.username}</h1>
+            <h2>{user.name}</h2>
+            <p>{user.email}</p>
+            <p>{user.company.name}</p>
+            <LikeButton />
+            <CommentBox username={user.username} />
         </main>
         
     )
