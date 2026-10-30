@@ -1,36 +1,23 @@
-const profiles = {
-    cristiano: {
-        name: "Cristiano Ronaldo",
-        bio: "GOAT footballer",
-        followers: "660M",
-    },
-    nike: {
-        name: "Nike",
-        bio: "JUST DO IT",
-        followers: "1M",
-
-    },
-    beyonce: {
-        name: "Beyonce",
-        bio: "Singer",
-        followers: "777M",
-    },
-}
+import LikeButton from "@/components/LikeButton";
 
 export default async function ProfilePage({params}) {
     const {username} = await params;
+    const response = await fetch(
+        "https://jsonplaceholder.typicode.com/users?username=" + username);
+        const users = await response.json();
+        const user = users[0];
 
-    const profile = profiles[username]
 
-    if (!profile) {
+    if (!user) {
         return <h1>User not found</h1>
     }
     return (
         <main>
-            <h1>@{username}</h1>
-            <h2>{profile.name}</h2>
-            <h2>{profile.bio}</h2>
-            <h2>{profile.followers} Followers</h2>
+            <h1>@{user.username}</h1>
+            <h2>{user.name}</h2>
+            <h2>{user.company.name}</h2>
+            <h2>{user.email}</h2>
+            <LikeButton/>
         </main>
-    )
+    );
 }
