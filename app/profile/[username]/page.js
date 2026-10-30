@@ -1,4 +1,5 @@
 import LikeButton from "@/components/LikeButton";
+import CommentBox from "@/components/CommentBox";
 
 export default async function ProfilePage({params}) {
     const {username} = await params;
@@ -18,6 +19,7 @@ export default async function ProfilePage({params}) {
             <h2>{user.company.name}</h2>
             <h2>{user.email}</h2>
             <LikeButton/>
+            <CommentBox username={user.username}/>
         </main>
     );
 }
